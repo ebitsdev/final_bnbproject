@@ -27,27 +27,13 @@
     <div id="cuisineOptions">
         <H2>What are you craving today?</H2>
 
-                <img src="./assets/bb_final_logo1.png" alt="BB Logo" id="logo">
-                    <nav>
-                        <ul>
-                            <li><a href="#">HOME</a></li>
-                            <li><a href="./select.html">SELECTION</a></li>
-                            <li><a href="#">CONTACT</a></li>
-                        </ul>
-                    </nav>             
-            </div>
-            </header>
-    <div id="cuisineOptions">
-        <h2>What are you craving today?</h2>
-
-
-        <form action="">
-                <input type="radio" name="rest" value="Italian"> Italian
-                <input type="radio" name="rest" value="Spanish"> Spanish
-                <input type="radio" name="rest" value="Asian"> Asian
-                <input type="radio" name="rest" value="French"> French
+        <form id="restoSelectorForm">
+                <input onclick="logoSort()" type="radio" name="rest" value="italian"> Italian
+                <input type="radio" name="rest" value="spanish"> Spanish
+                <input type="radio" name="rest" value="asian"> Asian
+                <input type="radio" name="rest" value="french"> French
         </form>
-        
+
     </div>
 
     <div id="imageContainer">
@@ -73,6 +59,6 @@
 
     <!-- TEST COMMENT -->
 
-<script src="main.js"></script>
+<script src="./select.js"></script>
 </body>
-</html> 
+</html>
