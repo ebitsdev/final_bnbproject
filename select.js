@@ -3,7 +3,7 @@ let cuisineOptions = []
 let elImageContainer = document.getElementById('imageContainer')
 let elFormContainer = document.getElementById('cuisineOptions')
 let elButtonContainer = document.getElementById('Results')
-let restoLogoGroup = document.getElementsByClassName('resto-logo')
+let restaurantLogoGroup = document.getElementsByClassName('restaurant-logo')
 let resultPageLink = document.getElementById('results')
 
 function RestaurantObject(name, logoPath, restPath, id, cuisine) {
@@ -35,15 +35,14 @@ let UncleJulios = new RestaurantObject('UncleJulio', './assets/unclejulios.png',
 //push  new instances/objects into  characterImageArray
 cuisineArray.push(KadHai, MakiSushi, Raku, MonAmi, LeChat, LeVieux, Olazzo,
     Panetteria, Cesco, Jaleo, Chipotle, UncleJulios)
-let formElement = document.getElementById('restoSelectorForm')
-let inputEl = document.querySelectorAll('input')
+let cuisineSelectionButton = document.querySelectorAll('input')
 
 // Track the clicked logo for processing
-function clickedRestoLogo(restaurants, logoImgArray) {
+function clickedrestaurantLogo(restaurants, logoArrays) {
     let selectedRestaurant
     // Create a selected restaurant var
     for (let restaurant of restaurants) {
-        for (let logo of logoImgArray) {
+        for (let logo of logoArrays) {
             logo.addEventListener('click', function (e) {
                 // Log the logo for test purpose
                 if (e.currentTarget.name === restaurant.name) {
@@ -58,29 +57,38 @@ function clickedRestoLogo(restaurants, logoImgArray) {
 }
 // Generate logo images based on cuisine category
 function generateLogoImage(restaurants, val) {
-    for (resto of restaurants){
+    for (restaurant of restaurants){
+        // Create the logo img tag
         let logo = document.createElement('img')
-        if (resto.cuisine === val) {
-            logo.name = resto.name
-            logo.src = resto.logoPath
+        // Check the cuisine type against the value of the input tag to display restaurant logo per cuisine
+        if (restaurant.cuisine === val) {
+            // Set logo img tag name attribute
+            logo.name = restaurant.name
+            // Set the logo img tag src attribute value to logoPath property of the restaurant object
+            logo.src = restaurant.logoPath
+            // Append the logo img element to the DOM
             elImageContainer.appendChild(logo)
         }
     }
 }
 
-function restaurantSelector(clickedElements, restos) {
-    for (let resto of restos) {
+function restaurantSelector(clickedElements, restaurants) {
+    // Iterate through the restaurants
+    for (let restaurant of restaurants) {
+        // Iterate through the clicked form elements
         for (let clickedElement of clickedElements) {
-            clickedElement.addEventListener('click', function (e) {
-                if (e.currentTarget.value === resto.cuisine) {
+            // Add an event listener on the radio button
+            clickedElement.addEventListener('click', function (event) {
+                if (event.currentTarget.value === restaurant.cuisine) {
                     // Clear the imageContainer div on every click
                     elImageContainer.innerHTML = ''
-                    generateLogoImage(restos, clickedElement.value)
+                    // Generate the 3 restaurant logos per cuisine
+                    generateLogoImage(restaurants, clickedElement.value)
                 }
-                // Access the images of the restaurants per cuisine
-                clickedRestoLogo(restos, elImageContainer.childNodes)
+                // Access the images of the restaurants per cuisine and check which logo was clicked
+                clickedrestaurantLogo(restaurants, elImageContainer.childNodes)
             })
         }
     }
 }
-restaurantSelector(inputEl, cuisineArray)
+restaurantSelector(cuisineSelectionButton, cuisineArray)
