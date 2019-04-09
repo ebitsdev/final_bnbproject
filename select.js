@@ -1,5 +1,6 @@
-let cuisineArray = []
+let restaurantArray = []
 let cuisineOptions = []
+// let selectedRestaurant = {}
 let elImageContainer = document.getElementById('imageContainer')
 let elFormContainer = document.getElementById('cuisineOptions')
 let elButtonContainer = document.getElementById('Results')
@@ -19,38 +20,40 @@ RestaurantObject.prototype.getLogo = function () {
     return this.logoPath
 }
 
-let KadHai = new RestaurantObject('Kadhai', './assets/kadhai.png', '', 'kadhai', 'asian')
-let MakiSushi = new RestaurantObject('MakiSushi', './assets/makisushi.jpg', '', 'maki', 'asian')
+let KadHai = new RestaurantObject('Kadhai', './assets/kadhai.png', './assets/', 'kadhai', 'asian')
+let MakiSushi = new RestaurantObject('MakiSushi', './assets/makisushi.jpg', './assets/', 'maki', 'asian')
 let Raku = new RestaurantObject('Raku', './assets/raku.png', '', 'Raku', 'asian')
-let MonAmi = new RestaurantObject('MonAmi', './assets/monami.jpg', '', 'MonAmi', 'french')
-let LeChat = new RestaurantObject('LetChat', './assets/le_chat.jpg', '', 'LeChat', 'french')
-let LeVieux = new RestaurantObject('LeVieux', './assets/le_vieux.jpg', '', 'LeVieux', 'french')
-let Olazzo = new RestaurantObject('Olazzo', './assets/olazzo.jpg', 'rest_olazzo.jpg', 'Olazzo', 'italian')
-let Panetteria = new RestaurantObject('Panetteria', './assets/panetteria.jpg', 'rest_panetteria.jpg', 'Panetteria', 'italian')
-let Cesco = new RestaurantObject('Cesco', './assets/cesco.png', 'rest_cesto.jpg', 'Cesco', 'italian')
-let Jaleo = new RestaurantObject('Jaleo', './assets/jaleo.jpg', '', 'Jaleo', 'spanish')
-let Chipotle = new RestaurantObject('Chipotle', './assets/chipotle.jpg', '', 'Chipotle', 'spanish')
-let UncleJulios = new RestaurantObject('UncleJulio', './assets/unclejulios.png', '', 'UncleJulios', 'spanish')
+let MonAmi = new RestaurantObject('MonAmi', './assets/monami.jpg', './assets/', 'MonAmi', 'french')
+let LeChat = new RestaurantObject('LetChat', './assets/le_chat.jpg', './assets/', 'LeChat', 'french')
+let LeVieux = new RestaurantObject('LeVieux', './assets/le_vieux.jpg', './assets/', 'LeVieux', 'french')
+let Olazzo = new RestaurantObject('Olazzo', './assets/olazzo.jpg', './assets/rest_olazzo.jpg', 'Olazzo', 'italian')
+let Panetteria = new RestaurantObject('Panetteria', './assets/panetteria.jpg', './assets/rest_panetteria.jpg', 'Panetteria', 'italian')
+let Cesco = new RestaurantObject('Cesco', './assets/cesco.png', './assets/rest_cesto.jpg', 'Cesco', 'italian')
+let Jaleo = new RestaurantObject('Jaleo', './assets/jaleo.jpg', './assets/', 'Jaleo', 'spanish')
+let Chipotle = new RestaurantObject('Chipotle', './assets/chipotle.jpg', './assets/', 'Chipotle', 'spanish')
+let UncleJulios = new RestaurantObject('UncleJulio', './assets/unclejulios.png', './assets/', 'UncleJulios', 'spanish')
 
 //push  new instances/objects into  characterImageArray
-cuisineArray.push(KadHai, MakiSushi, Raku, MonAmi, LeChat, LeVieux, Olazzo,
+restaurantArray.push(KadHai, MakiSushi, Raku, MonAmi, LeChat, LeVieux, Olazzo,
     Panetteria, Cesco, Jaleo, Chipotle, UncleJulios)
-let cuisineSelectionButton = document.querySelectorAll('input')
+let cuisineSelectors = document.querySelectorAll('input')
 
-// Track the clicked logo for processing
-function clickedrestaurantLogo(restaurants, logoArrays) {
-    let selectedRestaurant
-    // Create a selected restaurant var
+// Function to select cuisine category by clicking a radio button for one of the 3 cuisines
+function restaurantSelector(clickedElements, restaurants) {
+    // Iterate through the restaurants
     for (let restaurant of restaurants) {
-        for (let logo of logoArrays) {
-            logo.addEventListener('click', function (e) {
-                // Log the logo for test purpose
-                if (e.currentTarget.name === restaurant.name) {
-                    // Set the clicked restaurant to the selected restaurant
-                    selectedRestaurant = restaurant
-                    console.log(selectedRestaurant)
+        // Iterate through the clicked form elements
+        for (let clickedElement of clickedElements) {
+            // Add an event listener on the radio button
+            clickedElement.addEventListener('click', function (event) {
+                if (event.currentTarget.value === restaurant.cuisine) {
+                    // Clear the imageContainer div on every click
+                    elImageContainer.innerHTML = ''
+                    // Generate the 3 restaurant logos per cuisine
+                    generateLogoImage(restaurants, clickedElement.value)
                 }
-                // window.location = './results.html'
+                // Access the images of the restaurants per cuisine and check which logo was clicked
+                clickedrestaurantLogo(restaurants, elImageContainer.childNodes)
             })
         }
     }
@@ -71,24 +74,29 @@ function generateLogoImage(restaurants, val) {
         }
     }
 }
-
-function restaurantSelector(clickedElements, restaurants) {
-    // Iterate through the restaurants
+// Track the clicked logo for processing
+function clickedrestaurantLogo(restaurants, logoArrays) {
+    // Create a selected restaurant var
+    // Here we use the new for of introduced in ES6 to iterate over iterables (array, objects, arguments)
     for (let restaurant of restaurants) {
-        // Iterate through the clicked form elements
-        for (let clickedElement of clickedElements) {
-            // Add an event listener on the radio button
-            clickedElement.addEventListener('click', function (event) {
-                if (event.currentTarget.value === restaurant.cuisine) {
-                    // Clear the imageContainer div on every click
-                    elImageContainer.innerHTML = ''
-                    // Generate the 3 restaurant logos per cuisine
-                    generateLogoImage(restaurants, clickedElement.value)
+        //Iterate over the logos using for of syntax
+        for (let logo of logoArrays) {
+            //Creating an event listener to listen on logo clicks
+            logo.addEventListener('click', function (event) {
+                // Log the logo for test purpose
+                if (event.currentTarget.name === restaurant.name) {
+                    // Set the clicked restaurant to the selected restaurant
+                    // Add the restaurant object to local storage for the logo that was clicked
+                    addDataToLocalStorage(restaurant)
                 }
-                // Access the images of the restaurants per cuisine and check which logo was clicked
-                clickedrestaurantLogo(restaurants, elImageContainer.childNodes)
+                window.location = './results.html'
             })
         }
     }
 }
-restaurantSelector(cuisineSelectionButton, cuisineArray)
+// Create a function to store the restaurant object instance
+function addDataToLocalStorage(data){
+    localStorage.setItem('restaurant', JSON.stringify(data))
+}
+
+restaurantSelector(cuisineSelectors, restaurantArray)
