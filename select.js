@@ -1,11 +1,5 @@
 let restaurantArray = []
-let cuisineOptions = []
-// let selectedRestaurant = {}
 let elImageContainer = document.getElementById('imageContainer')
-let elFormContainer = document.getElementById('cuisineOptions')
-let elButtonContainer = document.getElementById('Results')
-let restaurantLogoGroup = document.getElementsByClassName('restaurant-logo')
-let resultPageLink = document.getElementById('results')
 
 function RestaurantObject(name, logoPath, restPath, id, cuisine) {
     this.name = name
@@ -16,6 +10,7 @@ function RestaurantObject(name, logoPath, restPath, id, cuisine) {
     this.clicked = 0
     this.shown = 0
 }
+// Unused code
 RestaurantObject.prototype.getLogo = function () {
     return this.logoPath
 }
