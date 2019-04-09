@@ -2,9 +2,7 @@
 // To read selected restaurant object from the local storage
 function getDataFromLocalStorage(){
     let data = JSON.parse(localStorage.getItem('restaurant'))
-    console.log(data)
     selectedRestaurant(data)
-    return data
  }
  // Create a function to generate selected restaurant object
  function selectedRestaurant(restaurant){
