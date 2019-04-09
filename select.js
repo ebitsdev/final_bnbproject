@@ -7,8 +7,6 @@ function RestaurantObject(name, logoPath, restPath, id, cuisine) {
     this.restPath = restPath
     this.id = id
     this.cuisine = cuisine
-    this.clicked = 0
-    this.shown = 0
 }
 // Unused code
 RestaurantObject.prototype.getLogo = function () {
