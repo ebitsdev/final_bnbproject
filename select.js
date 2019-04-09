@@ -84,6 +84,7 @@ function clickedrestaurantLogo(restaurants, logoArrays) {
                     // Add the restaurant object to local storage for the logo that was clicked
                     addDataToLocalStorage(restaurant)
                 }
+                // Go to result page
                 window.location = './results.html'
             })
         }
