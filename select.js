@@ -28,16 +28,17 @@ let Jaleo = new RestaurantObject('Jaleo', './assets/jaleo.jpg', './assets/', 'Ja
 let Chipotle = new RestaurantObject('Chipotle', './assets/chipotle.jpg', './assets/', 'Chipotle', 'spanish')
 let UncleJulios = new RestaurantObject('UncleJulio', './assets/unclejulios.png', './assets/', 'UncleJulios', 'spanish')
 
-//push  new instances/objects into  characterImageArray
+//push  new restaurant instances/objects into  restaurantArray
 restaurantArray.push(KadHai, MakiSushi, Raku, MonAmi, LeChat, LeVieux, Olazzo,
     Panetteria, Cesco, Jaleo, Chipotle, UncleJulios)
+// Reference the radio buttons
 let cuisineSelectors = document.querySelectorAll('input')
 
-// Function to select cuisine category by clicking a radio button for one of the 3 cuisines
+// Function to select restaurant category by clicking a radio button for one of the 3 cuisines
 function restaurantSelector(clickedElements, restaurants) {
-    // Iterate through the restaurants
+    // Iterate over the restaurants
     for (let restaurant of restaurants) {
-        // Iterate through the clicked form elements
+        // Iterate over the clicked form elements
         for (let clickedElement of clickedElements) {
             // Add an event listener on the radio button
             clickedElement.addEventListener('click', function (event) {
@@ -62,7 +63,7 @@ function generateLogoImage(restaurants, val) {
         if (restaurant.cuisine === val) {
             // Set logo img tag name attribute
             logo.name = restaurant.name
-            // Set the logo img tag src attribute value to logoPath property of the restaurant object
+            // Set the logo img tag src attribute value to the logoPath property of the restaurant object
             logo.src = restaurant.logoPath
             // Append the logo img element to the DOM
             elImageContainer.appendChild(logo)
@@ -94,5 +95,5 @@ function clickedrestaurantLogo(restaurants, logoArrays) {
 function addDataToLocalStorage(data){
     localStorage.setItem('restaurant', JSON.stringify(data))
 }
-
+// Call the restaurantSelector function to launch the web app
 restaurantSelector(cuisineSelectors, restaurantArray)
